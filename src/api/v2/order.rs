@@ -515,7 +515,7 @@ impl ChangeReqInit {
 
 
 /// A PATCH request to be made to the /v2/orders/<order-id> endpoint.
-#[derive(Clone, Debug, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct ChangeReq {
   /// Number of shares to trade.
   #[serde(rename = "qty")]
@@ -1211,6 +1211,8 @@ mod tests {
     };
   }
 
+  /// Check that we get back the expected error when attempting to
+  /// cancel an invalid (non-existent) order.
   #[test(tokio::test)]
   async fn cancel_invalid_order() {
     let id = Id(Uuid::parse_str("00000000-0000-0000-0000-000000000000").unwrap());
@@ -1225,6 +1227,7 @@ mod tests {
     };
   }
 
+  /// Check that we can retrieve an order given its ID.
   #[test(tokio::test)]
   async fn retrieve_order_by_id() {
     let api_info = ApiInfo::from_env().unwrap();
@@ -1282,6 +1285,7 @@ mod tests {
     };
   }
 
+  /// Check that we can change an existing order.
   #[test(tokio::test)]
   async fn change_order() {
     let request = OrderReqInit {

@@ -1,6 +1,7 @@
 Unreleased
 ----------
 - Added `order_class` member to `api::v2::order::Order` type
+- Added `Deserialize` implementation for `api::v2::order::ChangeReq`
 - Bumped `uuid` dependency to `1.0`
 
 
