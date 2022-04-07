@@ -518,6 +518,10 @@ impl ChangeReqInit {
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct ChangeReq {
   /// Number of shares to trade.
+  // TODO: Should this really be an `Amount`?
+  // TODO: Is it really sensible to have these not be Options? Why do
+  //       these values have defaults?
+  // TODO: Should hook up client order ID.
   #[serde(rename = "qty")]
   pub quantity: Num,
   /// How long the order will be valid.

@@ -1,6 +1,7 @@
 // Copyright (C) 2019-2022 The apca Developers
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use serde::Deserialize;
 use serde::Serialize;
 use serde_urlencoded::to_string as to_query;
 
@@ -9,7 +10,7 @@ use crate::Str;
 
 
 /// The status of orders to list.
-#[derive(Clone, Copy, Debug, PartialEq, Serialize)]
+#[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
 pub enum Status {
   /// List open orders only.
   #[serde(rename = "open")]
@@ -26,7 +27,7 @@ pub enum Status {
 /// A GET request to be made to the /v2/orders endpoint.
 // Note that we do not expose or supply all parameters that the Alpaca
 // API supports.
-#[derive(Clone, Copy, Debug, Serialize, PartialEq)]
+#[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
 pub struct OrdersReq {
   /// The status of orders to list.
   #[serde(rename = "status")]
