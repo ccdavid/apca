@@ -1,4 +1,4 @@
-// Copyright (C) 2020-2021 The apca Developers
+// Copyright (C) 2020-2022 The apca Developers
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use num_decimal::Num;
@@ -24,5 +24,5 @@ where
   T: Deserialize<'de>,
 {
   let vec = Option::<Vec<T>>::deserialize(deserializer)?;
-  Ok(vec.unwrap_or_else(Vec::new))
+  Ok(vec.unwrap_or_default())
 }
