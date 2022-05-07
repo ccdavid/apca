@@ -605,7 +605,7 @@ pub struct Order {
   pub type_: Type,
   /// The order class.
   #[serde(rename = "order_class", deserialize_with = "empty_to_default")]
-  pub order_class: Class,
+  pub class: Class,
   /// The side the order is on.
   #[serde(rename = "side")]
   pub side: Side,
@@ -936,7 +936,7 @@ mod tests {
     assert_eq!(order.symbol, "AAPL");
     assert_eq!(order.amount, Amount::quantity(15));
     assert_eq!(order.type_, Type::Market);
-    assert_eq!(order.order_class, Class::OneTriggersOther);
+    assert_eq!(order.class, Class::OneTriggersOther);
     assert_eq!(order.time_in_force, TimeInForce::Day);
     assert_eq!(order.limit_price, Some(Num::from(107)));
     assert_eq!(order.stop_price, Some(Num::from(106)));
@@ -977,7 +977,7 @@ mod tests {
 }"#;
 
     let order = from_json::<Order>(json).unwrap();
-    assert_eq!(order.order_class, Class::Simple);
+    assert_eq!(order.class, Class::Simple);
   }
 
   /// Check that we can serialize and deserialize an [`OrderReq`].
@@ -1026,7 +1026,7 @@ mod tests {
       assert_eq!(order.amount, Amount::quantity(1));
       assert_eq!(order.side, Side::Buy);
       assert_eq!(order.type_, Type::Limit);
-      assert_eq!(order.order_class, Class::default());
+      assert_eq!(order.class, Class::default());
       assert_eq!(order.time_in_force, TimeInForce::Day);
       assert_eq!(order.limit_price, Some(Num::from(1)));
       assert_eq!(order.stop_price, None);
@@ -1131,7 +1131,7 @@ mod tests {
     assert_eq!(order.amount, Amount::quantity(1));
     assert_eq!(order.side, Side::Buy);
     assert_eq!(order.type_, Type::Limit);
-    assert_eq!(order.order_class, Class::Bracket);
+    assert_eq!(order.class, Class::Bracket);
     assert_eq!(order.time_in_force, TimeInForce::Day);
     assert_eq!(order.limit_price, Some(Num::from(2)));
     assert_eq!(order.stop_price, None);
@@ -1166,7 +1166,7 @@ mod tests {
     assert_eq!(order.amount, Amount::quantity(1));
     assert_eq!(order.side, Side::Buy);
     assert_eq!(order.type_, Type::Limit);
-    assert_eq!(order.order_class, Class::OneTriggersOther);
+    assert_eq!(order.class, Class::OneTriggersOther);
     assert_eq!(order.time_in_force, TimeInForce::Day);
     assert_eq!(order.limit_price, Some(Num::from(2)));
     assert_eq!(order.stop_price, None);

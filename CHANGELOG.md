@@ -3,7 +3,7 @@ Unreleased
 - Added `gzip` compression support for transparent API response
   compression controlled by default enabled `gzip` feature
 - Added support for subscribing to realtime trades
-- Added `order_class` member to `api::v2::order::Order` type
+- Added `class` member to `api::v2::order::Order` type
 - Added `symbols` member to `api::v2::orders::OrdersReq` type
 - Added `Deserialize` implementation for `api::v2::order::ChangeReq`
 - Made `api::v2::position::Position` exhaustive
