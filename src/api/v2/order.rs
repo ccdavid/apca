@@ -982,7 +982,7 @@ mod tests {
 
   /// Check that we can serialize and deserialize an [`OrderReq`].
   #[test]
-  fn serialize_deserialize_request() {
+  fn serialize_deserialize_order_request() {
     let request = OrderReqInit {
       type_: Type::TrailingStop,
       trail_price: Some(Num::from(50)),
@@ -992,6 +992,21 @@ mod tests {
 
     let json = to_json(&request).unwrap();
     assert_eq!(from_json::<OrderReq>(&json).unwrap(), request);
+  }
+
+  /// Check that we can serialize and deserialize a [`ChangeReq`].
+  #[test]
+  fn serialize_deserialize_change_request() {
+    let request = ChangeReqInit {
+      quantity: Num::from(37),
+      time_in_force: TimeInForce::UntilCanceled,
+      trail: Some(Num::from(42)),
+      ..Default::default()
+    }
+    .init();
+
+    let json = to_json(&request).unwrap();
+    assert_eq!(from_json::<ChangeReq>(&json).unwrap(), request);
   }
 
   /// Verify that we can submit a limit order.
