@@ -10,6 +10,8 @@ pub mod bars;
 pub mod last_quote;
 /// Functionality for retrieving historic quotes.
 pub mod quotes;
+/// Functionality for retrieving historic trades.
+pub mod trades;
 /// Definitions for real-time streaming of market data.
 pub mod stream;
 
