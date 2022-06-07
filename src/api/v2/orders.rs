@@ -33,6 +33,7 @@ pub struct OrdersReq {
   /// A list of simple symbols used as filters for the returned orders.
   #[serde(
     rename = "symbols",
+    default,
     deserialize_with = "vec_from_comma_separated_str",
     serialize_with = "string_slice_to_str"
   )]
@@ -98,6 +99,8 @@ mod tests {
 
   use serde_json::from_slice as from_json;
   use serde_json::to_vec as to_json;
+  use serde_urlencoded::from_str as from_query;
+  use serde_urlencoded::to_string as to_query;
 
   use test_log::test;
 
@@ -112,7 +115,7 @@ mod tests {
   /// Make sure that we can serialize and deserialize an `OrdersReq`.
   #[test]
   fn serialize_deserialize_request() {
-    let request = OrdersReq {
+    let mut request = OrdersReq {
       symbols: vec!["ABC".into()],
       status: Status::Closed,
       limit: Some(42),
@@ -121,6 +124,29 @@ mod tests {
 
     let json = to_json(&request).unwrap();
     assert_eq!(from_json::<OrdersReq>(&json).unwrap(), request);
+
+    request.symbols.clear();
+    let json = to_json(&request).unwrap();
+    assert_eq!(from_json::<OrdersReq>(&json).unwrap(), request);
+  }
+
+  /// Make sure that we can serialize and deserialize an `OrdersReq`
+  /// from a query string.
+  #[test]
+  fn serialize_deserialize_query_request() {
+    let mut request = OrdersReq {
+      symbols: vec!["ABC".into()],
+      status: Status::Closed,
+      limit: Some(42),
+      nested: true,
+    };
+
+    let query = to_query(&request).unwrap();
+    assert_eq!(from_query::<OrdersReq>(&query).unwrap(), request);
+
+    request.symbols.clear();
+    let query = to_query(&request).unwrap();
+    assert_eq!(from_query::<OrdersReq>(&query).unwrap(), request);
   }
 
   /// Cancel an order and wait for the corresponding cancellation event
