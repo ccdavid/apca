@@ -240,7 +240,7 @@ pub struct Trade {
   pub trade_id: u64,
   /// The exchange where this trade occured.
   #[serde(rename = "x")]
-  pub exchange : String,
+  pub exchange : char,
   /// The trade's price.
   #[serde(rename = "p")]
   pub trade_price: Num,
@@ -252,10 +252,10 @@ pub struct Trade {
   pub timestamp: DateTime<Utc>,
   /// Trade condition.
   #[serde(rename = "c")]
-  pub trade_condition: Vec<String>,
+  pub trade_conditions: Vec<char>,
   /// Tape.
   #[serde(rename = "z")]
-  pub tape : String,
+  pub tape : char,
 }
 
 

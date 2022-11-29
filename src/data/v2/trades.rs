@@ -92,17 +92,26 @@ pub struct Trade {
   #[serde(rename = "t")]
   pub timestamp: DateTime<Utc>,
   /// The exchange where the trade happened.
+  /// Alpaca internal code described in
+  /// https://alpaca.markets/docs/market-data/
   #[serde(rename = "x")]
-  pub exchange: String,
+  pub exchange: char,
   #[serde(rename = "p")]
   /// The trade's price.
   pub price: Num,
   /// The trade's size.
   #[serde(rename = "s")]
   pub size: u64,
+  /// The Trade conditions
+  /// as described in "Consolidated Tape System (CTS) Specification".
+  #[serde(rename = "c")]
+  pub trade_conditions: Vec<char>,
   /// Trade ID.
   #[serde(rename = "i")]
   pub trade_id: u64,
+  /// Tape.
+  #[serde(rename = "z")]
+  pub tape: char,
 }
 
 /// A collection of trades as returned by the API. This is one page of trades.
@@ -194,7 +203,7 @@ mod tests {
     let expected_time = DateTime::<Utc>::from_str("2021-02-01T16:01:00Z").unwrap();
     assert_eq!(trades.len(), 2);
     assert_eq!(trades[0].timestamp, expected_time);
-    assert_eq!(trades[0].exchange, "iex");
+    assert_eq!(trades[0].exchange, 'V');
     assert_eq!(trades[0].price, Num::new(16804, 100));
     assert_eq!(trades[0].size, 6804);
     assert_eq!(trades[0].trade_id, 1);
@@ -236,14 +245,14 @@ mod tests {
       trades[0].timestamp,
       DateTime::<Utc>::from_str("2018-12-04T05:00:00Z").unwrap()
     );
-    assert_eq!(trades[0].exchange, "iex");
+    assert_eq!(trades[0].exchange, 'V');
     assert_eq!(trades[0].price, Num::new(17669i32, 100i32));
     assert_eq!(trades[0].size, 3232);
     assert_eq!(
       trades[1].timestamp,
       DateTime::<Utc>::from_str("2018-12-06T05:00:00Z").unwrap()
     );
-    assert_eq!(trades[1].exchange, "iex");
+    assert_eq!(trades[1].exchange, 'V');
   }
 
   /// Verify that we can request data through a provided page token.
